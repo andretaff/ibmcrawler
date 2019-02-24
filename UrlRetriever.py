@@ -14,6 +14,7 @@ class tUrlRetriever:
 		self.mLinks = {}
 	
 	def recursivelyRetrieveURLLinks(self, sCurrentURL, iCurrentDepth):
+		#internal recurive function
 		if (sCurrentURL == ''):
 			return
 		print ('now retrieving: ',sCurrentURL,self.iDepth-iCurrentDepth)
@@ -27,18 +28,18 @@ class tUrlRetriever:
 		parsed = urlparse(sCurrentURL)
 		dominio =  '{uri.scheme}://{uri.netloc}'.format(uri=parsed)
 
-		for link in cSoup.find_all('a'):
+		for link in cSoup.find_all('a'): #get all links
 			sHref = str(link.get('href'))
-			if sHref.startswith('http'):
+			if sHref.startswith('http'): #but only starting with http
 				lLinks.append(sHref)
-			elif sHref.startswith('/'):
+			elif sHref.startswith('/'):  #or / (links within same domain)
 				lLinks.append(dominio + sHref)
 			
-		for link in lLinks:
-			if not link in self.mLinks:
-				self.mLinks[link] = self.iDepth-iCurrentDepth+1
+		for link in lLinks: # go throgh all the links
+			if not link in self.mLinks: #get all the new ones
+				self.mLinks[link] = self.iDepth-iCurrentDepth+1 #add it
 				if iCurrentDepth>0:
-					self.recursivelyRetrieveURLLinks(link,iCurrentDepth-1)
+					self.recursivelyRetrieveURLLinks(link,iCurrentDepth-1) #and go inside it again if needed
 	
 	def retrieveURLLinks(self):
 		self.recursivelyRetrieveURLLinks(self.sURL,self.iDepth)

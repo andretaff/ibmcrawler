@@ -5,7 +5,7 @@ from cloudant.client import Cloudant
 class tCloudNoSQL:
 	def __init__(self):
 		self.databaseName = 'ibmtest'
-		if 'VCAP_SERVICES' in os.environ:
+		if 'VCAP_SERVICES' in os.environ:  #connect uing cloud variables
 			vcap_servicesData = json.loads(os.environ['VCAP_SERVICES'])
 			cloudantNoSQLDBData = vcap_servicesData['cloudantNoSQLDB']
 			credentials = cloudantNoSQLDBData[0]
@@ -13,7 +13,7 @@ class tCloudNoSQL:
 			self.serviceUsername = credentialsData['username']
 			self.servicePassword = credentialsData['password']
 			self.serviceURL = credentialsData['url']
-		else:
+		else: #connect using static parameters
 			self.serviceUsername = 'a2dcc013-e43e-4824-aca7-30810c73d11a-bluemix'
 			self.servicePassword = '83a575e3a08675e55ce75f1c433d0666913d1b177fcbe59b91ee68c5e646b529'
 			self.serviceURL = 'https://a2dcc013-e43e-4824-aca7-30810c73d11a-bluemix:83a575e3a08675e55ce75f1c433d0666913d1b177fcbe59b91ee68c5e646b529@a2dcc013-e43e-4824-aca7-30810c73d11a-bluemix.cloudantnosqldb.appdomain.cloud'
