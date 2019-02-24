@@ -5,6 +5,7 @@
 from bs4 import BeautifulSoup
 import requests
 import copy
+from urllib.parse import urlparse
 
 class tUrlRetriever:
 	def __init__(self, sURL, iDepth):
@@ -23,10 +24,16 @@ class tUrlRetriever:
 			return
 		cSoup =	BeautifulSoup(cPage.content, 'html.parser')
 		lLinks = []
+		parsed = urlparse(sCurrentURL)
+		dominio =  '{uri.scheme}://{uri.netloc}'.format(uri=parsed)
+
 		for link in cSoup.find_all('a'):
 			sHref = str(link.get('href'))
 			if sHref.startswith('http'):
 				lLinks.append(sHref)
+			elif sHref.startswith('/'):
+				lLinks.append(dominio + sHref)
+			
 		for link in lLinks:
 			if not link in self.mLinks:
 				self.mLinks[link] = self.iDepth-iCurrentDepth+1
