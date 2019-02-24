@@ -1,0 +1,8 @@
+beautifulsoup4>=4.0.0
+cloudant>=2.4.0
+Flask>=0.10.0
+Jinja2>=2.10
+gunicorn==19.7.1
+prometheus-client
+ibmcloudenv
+livereload

@@ -15,7 +15,7 @@ class tUrlRetriever:
 	def recursivelyRetrieveURLLinks(self, sCurrentURL, iCurrentDepth):
 		if (sCurrentURL == ''):
 			return
-		print ('now retrieving: ',sCurrentURL)
+		print ('now retrieving: ',sCurrentURL,self.iDepth-iCurrentDepth)
 		try:
 			cPage = requests.get(sCurrentURL)
 		except:
@@ -25,13 +25,14 @@ class tUrlRetriever:
 		lLinks = []
 		for link in cSoup.find_all('a'):
 			sHref = str(link.get('href'))
-			lLinks.append(sHref)
+			if sHref.startswith('http'):
+				lLinks.append(sHref)
 		for link in lLinks:
 			if not link in self.mLinks:
-				self.mLinks[link] = iCurrentDepth
+				self.mLinks[link] = self.iDepth-iCurrentDepth+1
 				if iCurrentDepth>0:
 					self.recursivelyRetrieveURLLinks(link,iCurrentDepth-1)
-					
+	
 	def retrieveURLLinks(self):
 		self.recursivelyRetrieveURLLinks(self.sURL,self.iDepth)
 		return copy.deepcopy(self.mLinks)

@@ -1,0 +1,13 @@
+<!doctype html>
+<table>
+<tr>
+  <th>URL Retrieved</th>
+  <th>Depth found</th> 
+</tr>
+{% for r in result %}
+<tr>
+  <td>{{ r[0] }}</td>
+  <td>{{ r[1] }}</td>
+</tr>
+{% endfor %}
+</table>
