@@ -22,13 +22,26 @@ def my_form_post():
 		depth = 2
 		
 	depth = depth - 1
+	
+	try:
+		cDatabase.deleteAllDocuments() #start clearing the databse
+	except:
+		return render_template("error.html", error = 'Error deleting documents')
 		
-	cDatabase.deleteAllDocuments() #start clearing the databse
 	cUrlRetriever = UrlRetriever.tUrlRetriever(url,depth) 
+	mLinks = {}
+	try:
+		mLinks = cUrlRetriever.retrieveURLLinks() 	#go through the links
+	except:
+		return render_template("error.html", error = 'Error retrieving urls')
+	
+	mList = []
+	try:
+		cDatabase.saveDocument(mLinks)				#save to database
+		mList = cDatabase.retrieveDocuments()		#retrieve from database
+	except:
+		return render_template("error.html", error = 'Error saving documents')
 
-	mLinks = cUrlRetriever.retrieveURLLinks() 	#go through the links
-	cDatabase.saveDocument(mLinks)				#save to database
-	mList = cDatabase.retrieveDocuments()		#retrieve from database
 	items = []
 	for item in mList:
 		for sUrl,iDepth in item.items():
@@ -39,6 +52,9 @@ def my_form_post():
 	
 if __name__ == '__main__':
 	port = int(os.getenv('PORT', 8000)) #cloud magic
-	
-	cDatabase.connect()
+	try:
+		cDatabase.connect()
+	except:
+		print('Error connecting to database')
+		exit 
 	app.run(host='0.0.0.0', port=port)	
