@@ -1,8 +1,8 @@
 ################################################
-#											   #
-#	 	  IBM Test Crawler Application		   #
-#				André Taffarello			   #
-#											   #
+							
+	 IBM Test Crawler Application		  
+		André Taffarello			   
+											   
 ################################################
 
 - GitHub repository: https://github.com/andretaff/ibmcrawler
