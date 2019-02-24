@@ -3,10 +3,7 @@ applications:
 - instances: 1
   timeout: 180
   name: ibmtestcrawler
-  buildpack: python_buildpack
-  domain: mybluemix.net
   name: ibmtestcrawler 
-  host: ibmtestcrawler
   disk_quota: 1024M
   command: python ibmtestcrawler.py
   memory: 256M
