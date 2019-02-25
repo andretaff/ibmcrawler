@@ -18,6 +18,7 @@
 	/ templates
 		- index.html - main webpage (python flask)
 		- results.html - results page
+		- error.html - errors page
 	/tests
 		- UrlRetriever-testing.py - unit testing of that class
 		- CloudNoSLQ-testing.py - unit testing f that class
